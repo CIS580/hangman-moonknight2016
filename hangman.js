@@ -4,7 +4,8 @@ var lettersDiv = document.getElementById('letters');
 var guessesDiv = document.getElementById('guesses');
 var secretWord = "";
 var blanks = "";
-var wrongGuessCount =0;
+var wrongGuessCount = 0;
+var wonGame = 0
 
 /**
  * Initializes a new game.
@@ -59,34 +60,54 @@ function guessLetter(elm) {
   // TODO: Determine if the letter is in the secret word,
   // if so, reveal it in the secretWordDiv, otherwise
   // add a part to our hangman
-  if (secrtWord.indexOf(letter.toLowerCase())!=-1){
-  var oldblanks = blanks
+   
+   if (secretWord.indexOf(letter.toLowerCase())!=-1){
+  var oldBlanks = blanks;
   blanks = "";
-    for (i = l; i<secrtWord.length;i++)
+  var ii = 0;
+    for (ii = 0; ii<secretWord.length;ii++)
     {
-      if (secrtWord.charAt(i)== letter.toLowerCase())
+      if (secretWord.charAt(ii)== letter.toLowerCase())
       blanks +=  letter.toLowerCase();
-    }
     
-    else 
+	
+	else 
     {
-      blanks += oldblanks.charAt(i);
+      blanks += oldBlanks.charAt(ii);
       
     }
+    
+	
+	
+	}
     drawBlanks();
+    
   }
   
   // update our blanks
   else
   {
     wrongGuessCount++;
-    drawStickMan();
+    drawStickMan(wrongGuessCount);
     
   }
-  }
   
+	
+	
+	
   // TODO: Determine if the game is over, and if so,
   // let the player know if they have won or lost
+  
+  if(wrongGuessCount>5)
+		wonGame--;
+	
+  if(secretWord==blanks)
+	  wonGame++;
+	
+	if (wonGame==1)
+		alert("You won the game");
+     if (wonGame==-1)
+		 alert("You lost the game");
 }
 
 /**
